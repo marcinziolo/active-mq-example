@@ -80,7 +80,7 @@ components:
         accounts:
           type: array
           items:
-              $ref: '#/components/schemas/Account'
+            $ref: '#/components/schemas/Account'
     Account:
       type: object
       properties:
