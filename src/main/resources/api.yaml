@@ -3,8 +3,8 @@ info:
   title: Customer details
   description: Customer details
   version: 1.0.0
-servers:
-  - url: 'https'
+#servers:
+#  - url: 'https'
 paths:
   /customers:
     get:
@@ -100,7 +100,9 @@ components:
           type: string
         month:
           type: string
-          required: false
         year:
           type: string
+      required:
+        - customerId
+        - year
   

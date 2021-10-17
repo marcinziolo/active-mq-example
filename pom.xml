@@ -16,6 +16,9 @@
     <properties>
         <java.version>11</java.version>
         <kotlin.version>1.5.31</kotlin.version>
+        <openapi-generator-version>5.2.1</openapi-generator-version>
+        <openapi.generator.maven.plugin.generateApis>false</openapi.generator.maven.plugin.generateApis>
+        <openapi.generator.maven.plugin.generateSupportingFiles>false</openapi.generator.maven.plugin.generateSupportingFiles>
     </properties>
     <dependencies>
         <dependency>
@@ -41,6 +44,11 @@
         <dependency>
             <groupId>org.jetbrains.kotlinx</groupId>
             <artifactId>kotlinx-coroutines-reactor</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${openapi-generator-version}</version>
         </dependency>
 
         <dependency>
@@ -73,6 +81,11 @@
                     <compilerPlugins>
                         <plugin>spring</plugin>
                     </compilerPlugins>
+                    <sourceDirs>
+                        <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                        <sourceDir>${project.basedir}/src/main/java</sourceDir>
+                        <sourceDir>${project.basedir}/target/generated-sources/openapi/src/main/kotlin</sourceDir>
+                    </sourceDirs>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -81,6 +94,28 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>${openapi-generator-version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/src/main/resources/api.yaml</inputSpec>
+                            <generatorName>kotlin</generatorName>
+                            <configOptions>
+                                <sourceFolder>src/main/kotlin</sourceFolder>
+                                <serializationLibrary>jackson</serializationLibrary>
+                                <packageName>com.southsun.refapp</packageName>
+                                <apisToGenerate/>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
