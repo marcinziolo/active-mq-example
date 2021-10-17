@@ -1,6 +1,6 @@
 package com.southsun.refapp.models
 
-data class Response(
+data class CustomerDetails(
     private val firstName: String,
     private val lastName: String,
     private val accounts: List<Account>
