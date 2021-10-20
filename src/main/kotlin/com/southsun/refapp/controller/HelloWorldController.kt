@@ -1,36 +1,31 @@
 package com.southsun.refapp.controller
 
-import com.southsun.refapp.models.CustomerDetails
-import org.apache.activemq.command.ActiveMQQueue
-import org.springframework.jms.core.JmsMessagingTemplate
+import org.springframework.jms.core.JmsTemplate
+import org.springframework.jms.core.MessageCreator
+import org.springframework.jms.support.converter.SimpleMessageConverter
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import java.util.*
-import javax.jms.DeliveryMode
-import javax.jms.Session
+import javax.jms.TextMessage
+
 
 @RestController("/")
 class HelloWorldController(
-    private val jmsMessagingTemplate: JmsMessagingTemplate
+    private val jmsTemplate: JmsTemplate,
 ) {
+
+    private val converter = SimpleMessageConverter()
+
     @GetMapping("/{word}")
-    fun helloWorld(@PathVariable("word") word: String): String {
+    fun send(@PathVariable("word") word: String): String {
+        val message = jmsTemplate.sendAndReceive("DEV.QUEUE.1", MessageCreator {
+            val message: TextMessage = it.createTextMessage(word)
+            message.jmsCorrelationID = UUID.randomUUID().toString()
+            message.jmsReplyTo = it.createQueue("DEV.QUEUE.2")
+            message
+        })!!
 
-        val session: Session = jmsMessagingTemplate.connectionFactory!!.createConnection()
-            .createSession(false, Session.AUTO_ACKNOWLEDGE)
-
-        val objectMessage = session.createObjectMessage(word)
-
-        objectMessage.jmsCorrelationID = UUID.randomUUID().toString();
-        objectMessage.jmsReplyTo = ActiveMQQueue("response")
-        objectMessage.jmsExpiration = 10000L;
-        objectMessage.jmsDeliveryMode = DeliveryMode.NON_PERSISTENT;
-
-
-        return jmsMessagingTemplate.convertSendAndReceive(
-            ActiveMQQueue("request"),
-            objectMessage, String::class.java
-        )!!
+        return converter.fromMessage(message) as String
     }
 }

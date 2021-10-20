@@ -12,3 +12,9 @@ Create two queues: request/response
 
 
 and run the app
+
+I* Run ibm mq
+* 
+*
+
+docker run -e LICENSE=accept -e MQ_QMGR_NAME=QM1 -p 1414:1414 -p 9443:9443 ibmcom/mq

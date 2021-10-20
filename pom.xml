@@ -62,11 +62,11 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-            <version>2.0.3.RELEASE</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-amqp</artifactId>-->
+<!--            <version>2.0.3.RELEASE</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -74,15 +74,30 @@
             <version>5.3.11</version>
         </dependency>
 
+<!--        <dependency>-->
+<!--            <groupId>org.apache.activemq</groupId>-->
+<!--            <artifactId>activemq-client</artifactId>-->
+<!--            <version>${activemq-client.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.apache.activemq</groupId>-->
+<!--            <artifactId>activemq-pool</artifactId>-->
+<!--            <version>${activemq-client.version}</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-client</artifactId>
-            <version>${activemq-client.version}</version>
+            <groupId>com.ibm.mq</groupId>
+            <artifactId>com.ibm.mq.allclient</artifactId>
+            <version>9.2.3.0</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.ibm.mq</groupId>-->
+<!--            <artifactId>mq-jms-spring-boot-starter</artifactId>-->
+<!--            <version>2.0.0</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>org.apache.activemq</groupId>
-            <artifactId>activemq-pool</artifactId>
-            <version>${activemq-client.version}</version>
+            <groupId>javax.jms</groupId>
+            <artifactId>javax.jms-api</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
     </dependencies>
